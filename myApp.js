@@ -31,7 +31,31 @@ app.get("/json", (req, res) => {
     })
 });
 
+app.get('/now', (req, res, next) => {
+    req.time = new Date().toString()
+    next();
+}, (req, res) => {
+    res.json({
+        time: req.time
+    })
+})
 
+app.get("/:word/echo", (req, res, next) => {
+    res.json({
+        echo: req.params.word
+    })
+    next();
+})
+
+app.get("/name", function(req, res) {
+    let firstName = req.query.first;
+    let lastName = req.query.last;
+    // Use template literals to form a formatted string
+    res.json({
+      name: `${firstName} ${lastName}`
+    });
+  });
+  
 
 
 
