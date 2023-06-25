@@ -8,6 +8,12 @@ const signal = (req, res) => {
 /* app.get("/", signal); */
 console.log('Hello World');
 
+app.use((req, res, next) => {
+    let string = req.method + " " + req.path + "-" + req.ip
+    console.log(string)
+    next()
+})
+
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/views/index.html");
 })
@@ -24,6 +30,7 @@ app.get("/json", (req, res) => {
       "message": response
     })
 });
+
 
 
 
