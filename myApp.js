@@ -2,12 +2,15 @@ require('dotenv').config();
 let express = require('express');
 let app = express();
 let response = ''
+let bodyParser = require('body-parser')
 const signal = (req, res) => {
   res.sendFile(__dirname + '/views/index.html')
 }
 /* app.get("/", signal); */
 console.log('Hello World');
 
+app.use(bodyParser.urlencoded({extended: false}))
+app.use(bodyParser.json());
 app.use((req, res, next) => {
     let string = req.method + " " + req.path + "-" + req.ip
     console.log(string)
@@ -55,8 +58,12 @@ app.get("/name", function(req, res) {
       name: `${firstName} ${lastName}`
     });
   });
-  
 
+  app.post("/name", function(req, res) {
+    // Handle the data in the request
+    var string = req.body.first + " " + req.body.last;
+    res.json({ name: string });
+  });
 
 
 
